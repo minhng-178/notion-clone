@@ -8,7 +8,13 @@ import {
   PlusCircle,
   Search,
   Settings,
+  Trash,
 } from 'lucide-react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { useMediaQuery } from 'usehooks-ts';
 import { usePathname } from 'next/navigation';
 import { useMutation } from 'convex/react';
@@ -20,6 +26,7 @@ import { api } from '@/convex/_generated/api';
 import { UserItem } from './user-item';
 import { Item } from './item';
 import { DocumentList } from './document-list';
+import { TrashBox } from './trash-box';
 
 export const Navigation = () => {
   const pathname = usePathname();
@@ -111,11 +118,11 @@ export const Navigation = () => {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: 'Untitle' });
+    const promise = create({ title: 'Untitled' });
 
     toast.promise(promise, {
       loading: 'Creating a new note...',
-      success: 'Note created!',
+      success: 'New note created!',
       error: 'Failed to create the note.',
     });
   };
@@ -150,6 +157,17 @@ export const Navigation = () => {
         <div className="mt-4">
           <DocumentList />
           <Item onClick={handleCreate} icon={Plus} label="Add a Page" />
+          <Popover>
+            <PopoverTrigger className="w-full mt-4">
+              <Item label="trash" icon={Trash} />
+            </PopoverTrigger>
+            <PopoverContent
+              className="p-0 w-72"
+              side={isMobile ? 'bottom' : 'right'}
+            >
+              <TrashBox />
+            </PopoverContent>
+          </Popover>
         </div>
         <div
           onMouseDown={handleMouseDown}
