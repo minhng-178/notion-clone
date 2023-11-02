@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -30,11 +29,11 @@ export const UserItem = () => {
               {user?.fullName}&apos;s Jotion
             </span>
           </div>
-          <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4" />
+          <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4 dark:text-white" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-80"
+        className="w-80 dark:bg-[#1F1F1F]"
         align="start"
         alignOffset={11}
         forceMount
@@ -44,8 +43,8 @@ export const UserItem = () => {
             {user?.emailAddresses[0].emailAddress}
           </p>
           <div className="flex items-center gap-x-2">
-            <div className="rounded-md bg-secondary p-1">
-              <Avatar className="h-8 w-8">
+            <div className="rounded-md bg-secondary dark:bg-[#1F1F1F] p-1">
+              <Avatar className="h-8 w-8 ">
                 <AvatarImage src={user?.imageUrl} />
               </Avatar>
             </div>
@@ -57,7 +56,7 @@ export const UserItem = () => {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="w-full cursor-pointer text-muted-foreground">
+        <DropdownMenuItem className="w-full cursor-pointer text-muted-foreground dark:bg-[#1F1F1F]">
           <SignOutButton>Logout</SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
