@@ -1,20 +1,29 @@
 'use client';
 
 import { ElementRef, useEffect, useRef, useState } from 'react';
-import { ChevronsLeft, MenuIcon } from 'lucide-react';
+import {
+  ChevronsLeft,
+  MenuIcon,
+  PlusCircle,
+  Search,
+  Settings,
+} from 'lucide-react';
 import { useMediaQuery } from 'usehooks-ts';
 import { usePathname } from 'next/navigation';
-import { useQuery } from 'convex/react';
+import { useQuery, useMutation } from 'convex/react';
 
 import { cn } from '@/lib/utils';
 import { api } from '@/convex/_generated/api';
 
 import { UserItem } from './user-item';
+import { Item } from './item';
+import { toast } from 'sonner';
 
 export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const documents = useQuery(api.documents.get);
+  const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<'aside'>>(null);
@@ -99,6 +108,16 @@ export const Navigation = () => {
     }
   };
 
+  const handleCreate = () => {
+    const promise = create({ title: 'Untitle' });
+
+    toast.promise(promise, {
+      loading: 'Creating a new note...',
+      success: 'Note created!',
+      error: 'Failed to create the note.',
+    });
+  };
+
   return (
     <>
       <aside
@@ -122,6 +141,9 @@ export const Navigation = () => {
 
         <div>
           <UserItem />
+          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item label="Setting" icon={Settings} onClick={() => {}} />
+          <Item label="New page" icon={PlusCircle} onClick={handleCreate} />
         </div>
         <div className="mt-4">
           {documents?.map(document => (
